@@ -27,12 +27,14 @@ Sebelum menjalankan program ini, pastikan Anda telah menginstal:
 ## Instalasi
 
 1. Clone repository ini atau unduh kode sumber:
+
 ```bash
 git clone [repository-url]
 cd pengukuran-volume-bola
 ```
 
 2. Buat dan aktifkan virtual environment (direkomendasikan):
+
 ```bash
 python -m venv venv
 source venv/bin/activate  # Untuk Linux/Mac
@@ -41,6 +43,7 @@ source venv/bin/activate  # Untuk Linux/Mac
 ```
 
 3. Instal paket yang diperlukan:
+
 ```bash
 pip install opencv-python numpy
 ```
@@ -48,6 +51,7 @@ pip install opencv-python numpy
 ## Cara Penggunaan
 
 1. Jalankan program:
+
 ```bash
 python main.py
 ```
@@ -73,11 +77,13 @@ python main.py
 Jika Anda mengalami error terkait Qt/Wayland, coba salah satu solusi berikut:
 
 1. Install qt5-wayland:
+
 ```bash
 sudo apt-get install qt5-wayland
 ```
 
 2. Atau atur variabel lingkungan QT platform:
+
 ```bash
 export QT_QPA_PLATFORM=xcb
 python main.py
