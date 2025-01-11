@@ -6,7 +6,10 @@ class BallVolumeMeasurement:
     def __init__(self):
         self.calibration_ratio = None  # pixels per mm
         self.real_diameter = None      # mm
-        self.cap = cv2.VideoCapture(2)
+        self.cap = cv2.VideoCapture(0)
+        
+        # Density of water (1 g/cm³)
+        self.water_density = 1.0
         
     def detect_ball(self, frame):
         # Convert to grayscale
@@ -50,6 +53,12 @@ class BallVolumeMeasurement:
         # Calculate volume using sphere formula: V = (4/3)πr³
         volume = (4/3) * math.pi * (radius_cm ** 3)
         return volume
+    
+    def calculate_volumetric_weight(self, volume):
+        """Calculate volumetric weight in grams based on water density"""
+        if volume is None:
+            return None
+        return volume * self.water_density
         
     def run(self):
         calibration_done = False
@@ -89,11 +98,15 @@ class BallVolumeMeasurement:
                     # Display current measurements
                     volume = self.calculate_volume(r * 2)  # diameter = 2 * radius
                     if volume is not None:
+                        volumetric_weight = self.calculate_volumetric_weight(volume)
+                        
                         cv2.putText(frame, f"Volume: {volume:.2f} cm³", (10, 60),
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                        cv2.putText(frame, f"Current Diameter: {2*r:.1f} px", (10, 90),
+                        cv2.putText(frame, f"Volumetric Weight: {volumetric_weight:.2f} g", (10, 90),
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                        cv2.putText(frame, f"Current Diameter: {(2*r/self.calibration_ratio):.1f} mm", (10, 120),
+                        cv2.putText(frame, f"Current Diameter: {2*r:.1f} px", (10, 120),
+                                  cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                        cv2.putText(frame, f"Current Diameter: {(2*r/self.calibration_ratio):.1f} mm", (10, 150),
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
             
             cv2.imshow('Ball Volume Measurement', frame)
