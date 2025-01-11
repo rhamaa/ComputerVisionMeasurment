@@ -7,9 +7,7 @@ class BallVolumeMeasurement:
         self.calibration_ratio = None  # pixels per mm
         self.real_diameter = None      # mm
         self.cap = cv2.VideoCapture(0)
-        
-        # Density of water (1 g/cm³)
-        self.water_density = 1.0
+        self.conversion_factor = None  # g/cm³
         
     def detect_ball(self, frame):
         # Convert to grayscale
@@ -55,13 +53,14 @@ class BallVolumeMeasurement:
         return volume
     
     def calculate_volumetric_weight(self, volume):
-        """Calculate volumetric weight in grams based on water density"""
-        if volume is None:
+        """Calculate volumetric weight in grams based on conversion factor"""
+        if volume is None or self.conversion_factor is None:
             return None
-        return volume * self.water_density
+        return volume * self.conversion_factor
         
     def run(self):
         calibration_done = False
+        factor_set = False
         
         while True:
             ret, frame = self.cap.read()
@@ -90,9 +89,14 @@ class BallVolumeMeasurement:
                 if not calibration_done:
                     cv2.putText(frame, "Press 'c' to calibrate", (10, 30),
                               cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                elif not factor_set:
+                    cv2.putText(frame, "Press 'd' to set conversion factor", (10, 30),
+                              cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
                 else:
-                    # Display calibration ratio
+                    # Display calibration ratio and conversion factor
                     cv2.putText(frame, f"Calibration: {self.calibration_ratio:.2f} px = 1mm", (10, 30),
+                              cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
+                    cv2.putText(frame, f"Conversion Factor: {self.conversion_factor:.2f} g/cm³", (10, 60),
                               cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
                     
                     # Display current measurements
@@ -100,13 +104,13 @@ class BallVolumeMeasurement:
                     if volume is not None:
                         volumetric_weight = self.calculate_volumetric_weight(volume)
                         
-                        cv2.putText(frame, f"Volume: {volume:.2f} cm³", (10, 60),
+                        cv2.putText(frame, f"Volume: {volume:.2f} cm³", (10, 90),
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                        cv2.putText(frame, f"Volumetric Weight: {volumetric_weight:.2f} g", (10, 90),
+                        cv2.putText(frame, f"Volumetric Weight: {volumetric_weight:.2f} g", (10, 120),
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                        cv2.putText(frame, f"Current Diameter: {2*r:.1f} px", (10, 120),
+                        cv2.putText(frame, f"Current Diameter: {2*r:.1f} px", (10, 150),
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                        cv2.putText(frame, f"Current Diameter: {(2*r/self.calibration_ratio):.1f} mm", (10, 150),
+                        cv2.putText(frame, f"Current Diameter: {(2*r/self.calibration_ratio):.1f} mm", (10, 180),
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
             
             cv2.imshow('Ball Volume Measurement', frame)
@@ -120,6 +124,11 @@ class BallVolumeMeasurement:
                 calibration_done = True
                 print("Calibration complete!")
                 print(f"Calibration ratio: {self.calibration_ratio:.2f} pixels = 1mm")
+            elif key == ord('d') and calibration_done and not factor_set:
+                self.conversion_factor = float(input("Enter the conversion factor (in g/cm³): "))
+                factor_set = True
+                print("Conversion factor set complete!")
+                print(f"Conversion factor: {self.conversion_factor:.2f} g/cm³")
         
         self.cap.release()
         cv2.destroyAllWindows()
