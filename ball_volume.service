@@ -1,0 +1,14 @@
+[Unit]
+Description=Ball Volume Measurement Service
+After=network.target
+
+[Service]
+User=nuurr
+WorkingDirectory=/home/nuurr/Dokumen/ComputerVisionMeasurment
+ExecStart=/home/nuurr/Dokumen/ComputerVisionMeasurment/venv/bin/python /home/nuurr/Dokumen/ComputerVisionMeasurment/raspi_main.py
+Restart=always
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/nuurr/.Xauthority
+
+[Install]
+WantedBy=multi-user.target
