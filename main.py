@@ -236,8 +236,7 @@ class BallVolumeMeasurement:
                 self.calibrate(2 * circle[2], real_diameter)
                 calibration_done = True
                 print("Kalibrasi selesai!")
-                print(f"Rasio kalibrasi: {
-                      self.calibration_ratio:.2f} piksel = 1mm")
+                print(f"Rasio kalibrasi: {self.calibration_ratio:.2f} piksel = 1mm")
             elif key == ord('d') and calibration_done and not factor_set:
                 # Set faktor konversi
                 self.conversion_factor = float(
