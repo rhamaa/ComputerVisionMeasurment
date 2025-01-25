@@ -156,3 +156,7 @@ sudo systemctl start ball_volume.service
 ```bash
 sudo systemctl status ball_volume.service
 ```
+
+## NOTE
+
+untuk versi raspberry pi 4 `raspi_main.py` pastikan akar jarak webcam denegan bidang pembaca berada pada jarak 30 cm untuk akurasi pembacaan yg lebih baik.
