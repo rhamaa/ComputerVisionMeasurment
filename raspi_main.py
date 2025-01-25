@@ -145,21 +145,29 @@ class BallVolumeMeasurement:
                 cv2.putText(frame, radius_text, (text_x, text_y),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
 
-                # Hitung dan tampilkan volume dan berat
-                volume = self.calculate_volume(r * 2)  # diameter = 2 * radius
+                # Hitung diameter dalam piksel dan milimeter
+                diameter_px = 2 * r
+                diameter_mm = diameter_px / self.calibration_ratio
+
+                # Hitung volume dan berat
+                volume = self.calculate_volume(diameter_px)
                 volumetric_weight = self.calculate_volumetric_weight(volume)
 
-                # Tampilkan data di LCD
-                self.lcd.text(f"Vol: {volume:.2f} cm3", 1)
-                self.lcd.text(f"Berat: {volumetric_weight:.2f} g", 2)
-
-                # Tampilkan informasi di frame
+                # Tampilkan informasi di frame OpenCV
                 cv2.putText(frame, f"Kalibrasi: {self.calibration_ratio:.2f} px = 1mm", (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 0), 2)
-                cv2.putText(frame, f"Volume: {volume:.2f} cm³", (10, 60),
+                cv2.putText(frame, f"Diameter (px): {diameter_px:.1f} px", (10, 60),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                cv2.putText(frame, f"Berat: {volumetric_weight:.2f} g", (10, 90),
+                cv2.putText(frame, f"Diameter (mm): {diameter_mm:.1f} mm", (10, 90),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                cv2.putText(frame, f"Volume: {volume:.2f} cm³", (10, 120),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+                cv2.putText(frame, f"Berat: {volumetric_weight:.2f} g", (10, 150),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
+
+                # Tampilkan data di LCD (hanya Volume dan Berat)
+                self.lcd.text(f"Vol: {volume:.2f} cm3", 1)
+                self.lcd.text(f"Berat: {volumetric_weight:.2f} g", 2)
 
             # Tampilkan frame
             cv2.imshow('Pengukuran Volume Bola', frame)
