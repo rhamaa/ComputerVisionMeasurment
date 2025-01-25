@@ -116,3 +116,43 @@ Perhitungan volume didasarkan pada rumus volume bola: V = (4/3)πr³
 - Membutuhkan kondisi pencahayaan yang baik
 - Akurasi tergantung pada kualitas kalibrasi awal
 - Hanya deteksi satu objek
+
+## Auto Start dengan Systemd
+
+### Buat file service di /etc/systemd/system/ball_volume.service
+
+```bash
+sudo nano /etc/systemd/system/ball_volume.service
+Isi file service dengan konfigurasi berikut:
+```
+
+```ini
+[Unit]
+Description=Ball Volume Measurement Service
+After=network.target
+
+[Service]
+User=nuurr
+WorkingDirectory=/home/nuurr/Dokumen/ComputerVisionMeasurment
+ExecStart=/home/nuurr/Dokumen/ComputerVisionMeasurment/venv/bin/python /home/nuurr/Dokumen/ComputerVisionMeasurment/raspi_main.py
+Restart=always
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/nuurr/.Xauthority
+
+[Install]
+WantedBy=multi-user.target
+```
+
+### Aktifkan dan mulai service
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable ball_volume.service
+sudo systemctl start ball_volume.service
+```
+
+### Verifikasi status service
+
+```bash
+sudo systemctl status ball_volume.service
+```
