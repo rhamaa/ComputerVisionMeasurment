@@ -160,14 +160,14 @@ class BallVolumeMeasurement:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
                 cv2.putText(frame, f"Diameter (mm): {diameter_mm:.1f} mm", (10, 90),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                cv2.putText(frame, f"Volume: {volume:.2f} cm³", (10, 120),
+                cv2.putText(frame, f"Volume: {int(round(volume))} cm³", (10, 120),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                cv2.putText(frame, f"Berat: {volumetric_weight:.2f} g", (10, 150),
+                cv2.putText(frame, f"Berat: {int(round(volumetric_weight))} g", (10, 150),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
 
                 # Tampilkan data di LCD (hanya Volume dan Berat)
-                self.lcd.text(f"Vol: {volume:.2f} cm3", 1)
-                self.lcd.text(f"Berat: {volumetric_weight:.2f} g", 2)
+                self.lcd.text(f"Vol: {int(round(volume))} cm3", 1)
+                self.lcd.text(f"Berat: {int(round(volumetric_weight))} g", 2)
 
             # Tampilkan frame
             cv2.imshow('Pengukuran Volume Bola', frame)

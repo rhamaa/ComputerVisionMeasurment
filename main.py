@@ -212,9 +212,9 @@ class BallVolumeMeasurement:
                         volumetric_weight = self.calculate_volumetric_weight(
                             volume)
 
-                        cv2.putText(frame, f"Volume: {volume:.2f} cm³", (10, 90),
+                        cv2.putText(frame, f"Volume: {int(round(volume))} cm³", (10, 90),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-                        cv2.putText(frame, f"Berat: {volumetric_weight:.2f} g", (10, 120),
+                        cv2.putText(frame, f"Berat: {int(round(volumetric_weight))} g", (10, 120),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
                         cv2.putText(frame, f"Diameter (px): {2*r:.1f} px", (10, 150),
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
