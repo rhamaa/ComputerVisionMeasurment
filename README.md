@@ -1,80 +1,80 @@
-# Pengukuran Volume Bola menggunakan Computer Vision
+# Ball Volume Measurement using Computer Vision
 
-Program Python ini menggunakan computer vision untuk mengukur volume benda berbentuk bola secara real-time menggunakan webcam. Program ini pertama-tama melakukan langkah kalibrasi menggunakan bola referensi dengan diameter yang sudah diketahui, kemudian dapat mengukur volume benda berbentuk bola lainnya.
+This Python program uses computer vision to measure the volume of spherical objects in real-time using a webcam. The program first performs a calibration step using a reference ball with a known diameter, then it can measure the volume of other spherical objects.
 
-## Fitur
+## Features
 
-- Deteksi bola secara real-time menggunakan webcam
-- Sistem kalibrasi menggunakan objek referensi
-- Tampilan langsung dari:
-  - Radius bola dalam piksel
-  - Rasio kalibrasi (piksel ke milimeter)
-  - Diameter saat ini dalam piksel dan milimeter
-  - Volume yang dihitung dalam sentimeter kubik (cm³)
-- Deteksi objek tunggal untuk menghindari kebingungan
-- Proses kalibrasi interaktif
+- Real-time ball detection using a webcam
+- Calibration system using a reference object
+- Live display of:
+  - Ball radius in pixels
+  - Calibration ratio (pixels to millimeters)
+  - Current diameter in pixels and millimeters
+  - Calculated volume in cubic centimeters (cm³)
+- Single object detection to avoid confusion
+- Interactive calibration process
 
-## Prasyarat
+## Prerequisites
 
-Sebelum menjalankan program ini, pastikan Anda telah menginstal:
+Before running this program, make sure you have installed:
 
 ```bash
-- Python 3.8 atau lebih tinggi
+- Python 3.8 or higher
 - OpenCV (cv2)
 - NumPy
 ```
 
-## Instalasi
+## Installation
 
-1. Clone repository ini atau unduh kode sumber:
+1. Clone this repository or download the source code:
 
 ```bash
 git clone [repository-url]
-cd pengukuran-volume-bola
+cd ball-volume-measurement
 ```
 
-2. Buat dan aktifkan virtual environment (direkomendasikan):
+2. Create and activate a virtual environment (recommended):
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # Untuk Linux/Mac
-# atau
-.\venv\Scripts\activate  # Untuk Windows
+source venv/bin/activate  # For Linux/Mac
+# or
+.\venv\Scripts\activate  # For Windows
 ```
 
-3. Instal paket yang diperlukan:
+3. Install the required packages:
 
 ```bash
 pip install opencv-python numpy
 ```
 
-## Cara Penggunaan
+## Usage
 
-1. Jalankan program:
+1. Run the program:
 
 ```bash
 python main.py
 ```
 
-2. Ketika jendela kamera terbuka:
-   - Letakkan bola referensi Anda (dengan diameter yang diketahui) di depan kamera
-   - Pastikan bola terlihat jelas dan lingkaran hijau mendeteksinya dengan baik
-   - Tekan 'c' untuk masuk mode kalibrasi
-   - Masukkan diameter sebenarnya dari bola referensi Anda dalam milimeter ketika diminta
+2. When the camera window opens:
+   - Place your reference ball (with a known diameter) in front of the camera
+   - Ensure the ball is clearly visible and the green circle detects it well
+   - Press 'c' to enter calibration mode
+   - Enter the actual diameter of your reference ball in millimeters when prompted
 
-3. Setelah kalibrasi:
-   - Program akan menunjukkan rasio kalibrasi (piksel per milimeter)
-   - Anda sekarang dapat mengukur objek berbentuk bola lainnya
-   - Pengukuran akan ditampilkan secara real-time di layar
+3. After calibration:
+   - The program will display the calibration ratio (pixels per millimeter)
+   - You can now measure other spherical objects
+   - Measurements will be displayed in real-time on the screen
 
-4. Kontrol:
-   - Tekan 'c' selama keadaan belum terkalibrasi untuk melakukan kalibrasi
-   - Tekan 'q' untuk keluar dari program
+4. Controls:
+   - Press 'c' while uncalibrated to perform calibration
+   - Press 'q' to exit the program
 
-## Penyelesaian Masalah
+## Troubleshooting
 
-### Masalah Qt/Wayland
-Jika Anda mengalami error terkait Qt/Wayland, coba salah satu solusi berikut:
+### Qt/Wayland Issues
+If you encounter errors related to Qt/Wayland, try one of the following solutions:
 
 1. Install qt5-wayland:
 
@@ -82,48 +82,48 @@ Jika Anda mengalami error terkait Qt/Wayland, coba salah satu solusi berikut:
 sudo apt-get install qt5-wayland
 ```
 
-2. Atau atur variabel lingkungan QT platform:
+2. Or set the QT platform environment variable:
 
 ```bash
 export QT_QPA_PLATFORM=xcb
 python main.py
 ```
 
-### Masalah Umum
+### Common Issues
 
-1. **Bola tidak terdeteksi:**
-   - Pastikan kondisi pencahayaan yang baik
-   - Jaga jarak bola pada jarak yang wajar dari kamera
-   - Pastikan bola memiliki kontras yang baik dengan latar belakang
+1. **Ball not detected:**
+   - Ensure good lighting conditions
+   - Keep the ball at a reasonable distance from the camera
+   - Ensure the ball has good contrast with the background
 
-2. **Pengukuran tidak akurat:**
-   - Kalibrasi ulang menggunakan objek referensi dengan dimensi yang diketahui
-   - Jaga jarak bola sama seperti saat kalibrasi
-   - Pastikan bola terlihat sepenuhnya dalam frame
+2. **Inaccurate measurements:**
+   - Recalibrate using a reference object with known dimensions
+   - Keep the ball at the same distance as during calibration
+   - Ensure the ball is fully visible in the frame
 
-## Detail Teknis
+## Technical Details
 
-Program ini menggunakan teknik computer vision berikut:
-- Transformasi Lingkaran Hough untuk deteksi bola
-- Gaussian blur untuk pengurangan noise
-- Pemrosesan frame real-time dari feed webcam
+This program uses the following computer vision techniques:
+- Hough Circle Transform for ball detection
+- Gaussian blur for noise reduction
+- Real-time frame processing from the webcam feed
 
-Perhitungan volume didasarkan pada rumus volume bola: V = (4/3)πr³
+Volume calculation is based on the formula for the volume of a sphere: V = (4/3)πr³
 
-## Keterbatasan
+## Limitations
 
-- Bekerja paling baik dengan objek berbentuk bola
-- Membutuhkan kondisi pencahayaan yang baik
-- Akurasi tergantung pada kualitas kalibrasi awal
-- Hanya deteksi satu objek
+- Works best with spherical objects
+- Requires good lighting conditions
+- Accuracy depends on the quality of the initial calibration
+- Detects only one object
 
-## Auto Start dengan Systemd
+## Auto Start with Systemd
 
-### Buat file service di /etc/systemd/system/ball_volume.service
+### Create a service file in /etc/systemd/system/ball_volume.service
 
 ```bash
 sudo nano /etc/systemd/system/ball_volume.service
-Isi file service dengan konfigurasi berikut:
+Fill the service file with the following configuration:
 ```
 
 ```ini
@@ -133,8 +133,8 @@ After=network.target
 
 [Service]
 User=nuurr
-WorkingDirectory=/home/nuurr/Dokumen/ComputerVisionMeasurment
-ExecStart=/home/nuurr/Dokumen/ComputerVisionMeasurment/venv/bin/python /home/nuurr/Dokumen/ComputerVisionMeasurment/raspi_main.py
+WorkingDirectory=/home/nuurr/Documents/ComputerVisionMeasurment
+ExecStart=/home/nuurr/Documents/ComputerVisionMeasurment/venv/bin/python /home/nuurr/Documents/ComputerVisionMeasurment/raspi_main.py
 Restart=always
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/nuurr/.Xauthority
@@ -143,7 +143,7 @@ Environment=XAUTHORITY=/home/nuurr/.Xauthority
 WantedBy=multi-user.target
 ```
 
-### Aktifkan dan mulai service
+### Enable and start the service
 
 ```bash
 sudo systemctl daemon-reload
@@ -151,12 +151,11 @@ sudo systemctl enable ball_volume.service
 sudo systemctl start ball_volume.service
 ```
 
-### Verifikasi status service
+### Verify service status
 
 ```bash
 sudo systemctl status ball_volume.service
 ```
 
 ## NOTE
-
-untuk versi raspberry pi 4 `raspi_main.py` pastikan akar jarak webcam denegan bidang pembaca berada pada jarak 30 cm untuk akurasi pembacaan yg lebih baik.
+For the Raspberry Pi 4 version (`raspi_main.py`), ensure the distance between the webcam and the reading surface is 30 cm for better reading accuracy.
