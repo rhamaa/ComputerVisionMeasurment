@@ -1,3 +1,14 @@
+"""
+This script is an extended version of the ball volume measurement program.
+It includes fullscreen display functionality and adjusts the camera resolution
+to fit the screen while maintaining the aspect ratio.
+
+Features:
+- Fullscreen display
+- Automatic camera resolution adjustment
+- Ball detection and volume calculation
+"""
+
 import cv2
 import numpy as np
 import math
@@ -7,7 +18,7 @@ class BallVolumeMeasurement:
     def __init__(self):
         self.calibration_ratio = None  # pixels per mm
         self.real_diameter = None      # mm
-        self.cap = cv2.VideoCapture(2)
+        self.cap = cv2.VideoCapture("http://192.168.0.106:4747/video")
         
         # Get primary monitor resolution
         monitor = get_monitors()[0]
